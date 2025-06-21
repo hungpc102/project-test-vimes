@@ -154,28 +154,24 @@ npm run test -- --coverage
 
 ## 🖼️ Giao Diện Ứng Dụng
 
-### 📋 Danh Sách Phiếu Nhập Kho
-![Danh sách phiếu nhập](docs/images/import-orders-list.png)
+### 📋 Trang chủ
+![Trang chủ](./docs/images/Screenshot%202025-06-22%20at%2002.20.24.png)
 
-
-### 📝 Form Tạo Phiếu Nhập Mới
-![Form tạo phiếu nhập](docs/images/create-import-order.png)
-
+### 📋 Danh sách phiếu nhập
+![Danh sách phiếu nhập B1](./docs/images/Screenshot%202025-06-22%20at%2002.26.18.png)
+![Danh sách phiếu nhập B2](./docs/images/Screenshot%202025-06-22%20at%2002.21.39.png)
+![Danh sách phiếu nhập B3](./docs/images/Screenshot%202025-06-22%20at%2002.22.01.png)
 
 ### 👁️ Chi Tiết Phiếu Nhập
-![Chi tiết phiếu nhập](docs/images/import-order-detail.png)
+![Chi tiết phiếu nhập](docs/images/Screenshot%202025-06-22%20at%2002.24.50.png)
+
+### 📝 Form Tạo Phiếu Nhập Mới
+![Form tạo phiếu nhập](docs/images/Screenshot%202025-06-22%20at%2002.21.06.png)
 
 
-### 🖨️ Giao Diện In Phiếu VT-01
-![Phiếu in](docs/images/print-preview.png)
+### 🖨️ Cập nhập trạng thái phiếu nhập
+![Phiếu in](docs/images/Screenshot%202025-06-22%20at%2002.51.58.png)
 
-
-### 📱 Responsive Mobile Design
-![Mobile interface](docs/images/mobile-interface.png)
-
-
-### 🔍 Tìm Kiếm và Lọc Nâng Cao
-![Search and filters](docs/images/search-filters.png)
 
 
 ---
