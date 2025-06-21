@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Nhập Kho</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+        }
+        .signature-box {
+            min-height: 80px;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-4">
+    <div class="max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-6">
+        <!-- Header -->
+        <div class="text-center mb-6 border-b pb-4">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">PHIẾU NHẬP KHO</h1>
+            <div class="text-sm text-gray-600">
+                <p>Số: <span id="display-so-phieu" class="font-semibold"></span></p>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <form id="phieu-nhap-form" class="space-y-6">
+            <!-- Thông tin cơ bản -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">
+                <h3 class="col-span-full text-lg font-semibold text-gray-700 mb-2">Thông tin phiếu</h3>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Số phiếu *</label>
+                    <input type="text" id="so_phieu" name="so_phieu" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Nhập số phiếu">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Ngày tháng năm *</label>
+                    <input type="date" id="ngay_thang_nam" name="ngay_thang_nam" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Người giao</label>
+                    <input type="text" id="nguoi_giao" name="nguoi_giao"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Tên người giao hàng">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Lý do nhập</label>
+                    <input type="text" id="ly_do_nhap" name="ly_do_nhap"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Lý do nhập kho">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Số chứng từ</label>
+                    <input type="text" id="so_chung_tu" name="so_chung_tu"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Số chứng từ kèm theo">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Ngày chứng từ</label>
+                    <input type="date" id="ngay_chung_tu" name="ngay_chung_tu"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+
+            <!-- Chi tiết hàng hóa -->
+            <div class="p-4 bg-blue-50 rounded-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-700">Chi tiết hàng hóa</h3>
+                    <button type="button" id="them-hang-hoa" 
+                            class="no-print bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        + Thêm hàng hóa
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 px-2 py-2 text-sm font-medium">STT</th>
+                                <th class="border border-gray-300 px-2 py-2 text-sm font-medium">Tên hàng hóa</th>
+                                <th class="border border-gray-300 px-2 py-2 text-sm font-medium">Đơn vị tính</th>
+                                <th class="border border-gray-300 px-2 py-2 text-sm font-medium">Số lượng</th>
+                                <th class="border border-gray-300 px-2 py-2 text-sm font-medium">Đơn giá</th>
+                                <th class="border border-gray-300 px-2 py-2 text-sm font-medium">Thành tiền</th>
+                                <th class="border border-gray-300 px-2 py-2 text-sm font-medium no-print">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="chi-tiet-tbody">
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-gray-50 font-semibold">
+                                <td colspan="5" class="border border-gray-300 px-2 py-2 text-right">Tổng cộng:</td>
+                                <td id="tong-tien" class="border border-gray-300 px-2 py-2 text-center">0 đ</td>
+                                <td class="border border-gray-300 no-print"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Ghi chú -->
+            <div class="p-4 bg-yellow-50 rounded-lg">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Ghi chú</h3>
+                <textarea id="ghi_chu" name="ghi_chu" rows="3"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Ghi chú thêm (nếu có)"></textarea>
+            </div>
+
+            <!-- Chữ ký -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-green-50 rounded-lg">
+                <h3 class="col-span-full text-lg font-semibold text-gray-700 mb-2">Chữ ký xác nhận</h3>
+                
+                <div class="text-center">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Người lập phiếu</label>
+                    <input type="text" id="nguoi_lap_phieu" name="nguoi_lap_phieu"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-center mb-2"
+                           placeholder="Họ tên">
+                    <div class="signature-box flex items-center justify-center text-gray-400 text-sm">
+                        Chữ ký
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Thủ kho</label>
+                    <input type="text" id="thu_kho" name="thu_kho"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-center mb-2"
+                           placeholder="Họ tên">
+                    <div class="signature-box flex items-center justify-center text-gray-400 text-sm">
+                        Chữ ký
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Kế toán trưởng</label>
+                    <input type="text" id="ke_toan_truong" name="ke_toan_truong"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-center mb-2"
+                           placeholder="Họ tên">
+                    <div class="signature-box flex items-center justify-center text-gray-400 text-sm">
+                        Chữ ký
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-center space-x-4 pt-6 border-t no-print">
+                <button type="submit" 
+                        class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium">
+                    💾 Lưu phiếu
+                </button>
+                <button type="button" onclick="window.print()" 
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium">
+                    🖨️ In phiếu
+                </button>
+                <button type="button" id="xem-danh-sach" 
+                        class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-medium">
+                    📋 Xem danh sách
+                </button>
+            </div>
+        </form>
+
+        <!-- Danh sách phiếu nhập -->
+        <div id="danh-sach-phieu" class="hidden mt-8 no-print">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-gray-800">Danh sách phiếu nhập kho</h2>
+                <button type="button" id="quay-lai-form" 
+                        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md">
+                    ← Quay lại form
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="border border-gray-300 px-3 py-2 text-sm font-medium">Số phiếu</th>
+                            <th class="border border-gray-300 px-3 py-2 text-sm font-medium">Ngày</th>
+                            <th class="border border-gray-300 px-3 py-2 text-sm font-medium">Người giao</th>
+                            <th class="border border-gray-300 px-3 py-2 text-sm font-medium">Lý do nhập</th>
+                            <th class="border border-gray-300 px-3 py-2 text-sm font-medium">Tổng tiền</th>
+                            <th class="border border-gray-300 px-3 py-2 text-sm font-medium">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="danh-sach-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Messages -->
+    <div id="message-container" class="fixed top-4 right-4 z-50"></div>
+
+    <script>
+        let chiTietItems = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('ngay_thang_nam').value = new Date().toISOString().split('T')[0];
+            themHangHoa();
+            
+            document.getElementById('them-hang-hoa').addEventListener('click', themHangHoa);
+            document.getElementById('phieu-nhap-form').addEventListener('submit', luuPhieu);
+            document.getElementById('xem-danh-sach').addEventListener('click', xemDanhSach);
+            document.getElementById('quay-lai-form').addEventListener('click', quayLaiForm);
+            
+            generateSoPhieu();
+        });
+
+        function generateSoPhieu() {
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(-2);
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const time = now.getHours().toString().padStart(2, '0') + now.getMinutes().toString().padStart(2, '0');
+            const soPhieu = `NK${year}${month}${day}${time}`;
+            
+            document.getElementById('so_phieu').value = soPhieu;
+            document.getElementById('display-so-phieu').textContent = soPhieu;
+        }
+
+        function themHangHoa() {
+            chiTietItems.push({
+                ten_hang_hoa: '',
+                don_vi_tinh: '',
+                so_luong: 0,
+                don_gia: 0,
+                thanh_tien: 0
+            });
+            renderChiTiet();
+        }
+
+        function renderChiTiet() {
+            const tbody = document.getElementById('chi-tiet-tbody');
+            tbody.innerHTML = '';
+            
+            chiTietItems.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="border border-gray-300 px-2 py-2 text-center">${index + 1}</td>
+                    <td class="border border-gray-300 px-2 py-2">
+                        <input type="text" value="${item.ten_hang_hoa}" 
+                               onchange="updateItem(${index}, 'ten_hang_hoa', this.value)"
+                               class="w-full px-2 py-1 border-0 focus:ring-1 focus:ring-blue-500 rounded" 
+                               placeholder="Tên hàng hóa">
+                    </td>
+                    <td class="border border-gray-300 px-2 py-2">
+                        <input type="text" value="${item.don_vi_tinh}" 
+                               onchange="updateItem(${index}, 'don_vi_tinh', this.value)"
+                               class="w-full px-2 py-1 border-0 focus:ring-1 focus:ring-blue-500 rounded" 
+                               placeholder="Đơn vị">
+                    </td>
+                    <td class="border border-gray-300 px-2 py-2">
+                        <input type="number" value="${item.so_luong}" min="0" step="0.01"
+                               onchange="updateItem(${index}, 'so_luong', parseFloat(this.value) || 0)"
+                               class="w-full px-2 py-1 border-0 focus:ring-1 focus:ring-blue-500 rounded text-right">
+                    </td>
+                    <td class="border border-gray-300 px-2 py-2">
+                        <input type="number" value="${item.don_gia}" min="0" step="0.01"
+                               onchange="updateItem(${index}, 'don_gia', parseFloat(this.value) || 0)"
+                               class="w-full px-2 py-1 border-0 focus:ring-1 focus:ring-blue-500 rounded text-right">
+                    </td>
+                    <td class="border border-gray-300 px-2 py-2 text-right font-medium">
+                        ${formatCurrency(item.thanh_tien)}
+                    </td>
+                    <td class="border border-gray-300 px-2 py-2 text-center no-print">
+                        <button type="button" onclick="xoaHangHoa(${index})" 
+                                class="text-red-500 hover:text-red-700 text-sm">🗑️</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            updateTongTien();
+        }
+
+        function updateItem(index, field, value) {
+            chiTietItems[index][field] = value;
+            if (field === 'so_luong' || field === 'don_gia') {
+                chiTietItems[index].thanh_tien = chiTietItems[index].so_luong * chiTietItems[index].don_gia;
+                renderChiTiet();
+            }
+        }
+
+        function xoaHangHoa(index) {
+            if (confirm('Bạn có chắc muốn xóa hàng hóa này?')) {
+                chiTietItems.splice(index, 1);
+                renderChiTiet();
+            }
+        }
+
+        function updateTongTien() {
+            const tongTien = chiTietItems.reduce((sum, item) => sum + item.thanh_tien, 0);
+            document.getElementById('tong-tien').textContent = formatCurrency(tongTien);
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN').format(amount) + ' đ';
+        }
+
+        async function luuPhieu(e) {
+            e.preventDefault();
+            
+            try {
+                if (chiTietItems.length === 0 || chiTietItems.every(item => !item.ten_hang_hoa.trim())) {
+                    showMessage('Vui lòng thêm ít nhất một hàng hóa!', 'error');
+                    return;
+                }
+
+                const formData = new FormData(e.target);
+                const phieuData = {
+                    so_phieu: formData.get('so_phieu'),
+                    ngay_thang_nam: formData.get('ngay_thang_nam'),
+                    nguoi_giao: formData.get('nguoi_giao'),
+                    ly_do_nhap: formData.get('ly_do_nhap'),
+                    so_chung_tu: formData.get('so_chung_tu'),
+                    ngay_chung_tu: formData.get('ngay_chung_tu'),
+                    ghi_chu: formData.get('ghi_chu'),
+                    chi_tiet: chiTietItems.filter(item => item.ten_hang_hoa.trim()),
+                    chu_ky: {
+                        nguoi_lap_phieu: formData.get('nguoi_lap_phieu'),
+                        thu_kho: formData.get('thu_kho'),
+                        ke_toan_truong: formData.get('ke_toan_truong')
+                    }
+                };
+
+                const response = await fetch('/api/phieu-nhap', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(phieuData)
+                });
+
+                if (response.ok) {
+                    showMessage('Lưu phiếu nhập thành công!', 'success');
+                    resetForm();
+                } else {
+                    const error = await response.json();
+                    showMessage(error.message || 'Có lỗi xảy ra khi lưu phiếu!', 'error');
+                }
+            } catch (error) {
+                console.error('Lỗi:', error);
+                showMessage('Có lỗi xảy ra: ' + error.message, 'error');
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('phieu-nhap-form').reset();
+            chiTietItems = [];
+            generateSoPhieu();
+            document.getElementById('ngay_thang_nam').value = new Date().toISOString().split('T')[0];
+            themHangHoa();
+        }
+
+        async function xemDanhSach() {
+            try {
+                const response = await fetch('/api/phieu-nhap');
+                if (response.ok) {
+                    const phieuList = await response.json();
+                    renderDanhSach(phieuList);
+                    
+                    document.getElementById('phieu-nhap-form').parentElement.style.display = 'none';
+                    document.getElementById('danh-sach-phieu').classList.remove('hidden');
+                } else {
+                    showMessage('Không thể tải danh sách phiếu!', 'error');
+                }
+            } catch (error) {
+                showMessage('Có lỗi xảy ra: ' + error.message, 'error');
+            }
+        }
+
+        function renderDanhSach(phieuList) {
+            const tbody = document.getElementById('danh-sach-tbody');
+            tbody.innerHTML = '';
+            
+            phieuList.forEach(phieu => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="border border-gray-300 px-3 py-2">${phieu.so_phieu}</td>
+                    <td class="border border-gray-300 px-3 py-2">${formatDate(phieu.ngay_thang_nam)}</td>
+                    <td class="border border-gray-300 px-3 py-2">${phieu.nguoi_giao || '-'}</td>
+                    <td class="border border-gray-300 px-3 py-2">${phieu.ly_do_nhap || '-'}</td>
+                    <td class="border border-gray-300 px-3 py-2 text-right">${formatCurrency(phieu.tong_tien || 0)}</td>
+                    <td class="border border-gray-300 px-3 py-2 text-center">
+                        <button onclick="xemChiTiet(${phieu.id})" 
+                                class="text-blue-500 hover:text-blue-700 text-sm">👁️ Xem</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        async function xemChiTiet(phieuId) {
+            try {
+                const response = await fetch(`/api/phieu-nhap/${phieuId}`);
+                if (response.ok) {
+                    const phieu = await response.json();
+                    alert(`Chi tiết phiếu ${phieu.so_phieu}:\n\nNgười giao: ${phieu.nguoi_giao || 'N/A'}\nLý do: ${phieu.ly_do_nhap || 'N/A'}\nSố mặt hàng: ${phieu.chi_tiet ? phieu.chi_tiet.length : 0}`);
+                } else {
+                    showMessage('Không thể tải chi tiết phiếu!', 'error');
+                }
+            } catch (error) {
+                showMessage('Có lỗi xảy ra: ' + error.message, 'error');
+            }
+        }
+
+        function quayLaiForm() {
+            document.getElementById('danh-sach-phieu').classList.add('hidden');
+            document.getElementById('phieu-nhap-form').parentElement.style.display = 'block';
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('vi-VN');
+        }
+
+        function showMessage(message, type = 'info') {
+            const container = document.getElementById('message-container');
+            const messageDiv = document.createElement('div');
+            
+            const bgColor = type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500';
+            
+            messageDiv.className = `${bgColor} text-white px-4 py-2 rounded-md mb-2 shadow-lg`;
+            messageDiv.textContent = message;
+            
+            container.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                container.removeChild(messageDiv);
+            }, 5000);
+        }
+    </script>
+</body>
+</html> 
