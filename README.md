@@ -158,15 +158,15 @@ npm run test -- --coverage
 ![Trang chủ](./docs/images/Screenshot%202025-06-22%20at%2002.20.24.png)
 
 ### 📋 Danh sách phiếu nhập
-![Danh sách phiếu nhập B1](./docs/images/Screenshot%202025-06-22%20at%2002.26.18.png)
+![Danh sách phiếu nhập](./docs/images/Screenshot%202025-06-22%20at%2002.26.18.png)
 
 ### 👁️ Chi Tiết Phiếu Nhập
 ![Chi tiết phiếu nhập](docs/images/Screenshot%202025-06-22%20at%2002.24.50.png)
 
 ### 📝 Form Tạo Phiếu Nhập Mới
 ![Form tạo phiếu nhập](docs/images/Screenshot%202025-06-22%20at%2002.21.06.png)
-![Danh sách phiếu nhập B2](./docs/images/Screenshot%202025-06-22%20at%2002.21.39.png)
-![Danh sách phiếu nhập B3](./docs/images/Screenshot%202025-06-22%20at%2002.22.01.png)
+![Form tạo phiếu nhập](./docs/images/Screenshot%202025-06-22%20at%2002.21.39.png)
+![Form tạo phiếu nhập](./docs/images/Screenshot%202025-06-22%20at%2002.22.01.png)
 
 
 ### 🖨️ Cập nhập trạng thái phiếu nhập
