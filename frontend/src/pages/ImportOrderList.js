@@ -185,7 +185,7 @@ const PageHeader = () => (
       </p>
     </div>
     <Link
-      to="/import-orders/new?scrollToProducts=true"
+      to="/import-orders/new"
       className="btn btn-create text-sm sm:text-base scale-in w-full sm:w-auto"
     >
       <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
@@ -492,7 +492,7 @@ const EmptyState = () => (
       Tạo phiếu nhập đầu tiên để bắt đầu
     </p>
     <Link
-      to="/import-orders/new?scrollToProducts=true"
+      to="/import-orders/new"
       className="btn btn-create text-sm sm:text-base"
     >
       <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />

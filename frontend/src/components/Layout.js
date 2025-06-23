@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
     },
     { 
       name: 'Tạo phiếu nhập', 
-      href: '/import-orders/new?scrollToProducts=true', 
+      href: '/import-orders/new', 
       icon: Plus,
       description: 'Tạo phiếu nhập mới'
     },
@@ -35,7 +35,27 @@ const Layout = ({ children }) => {
   ];
 
   const isActive = (href) => {
-    return location.pathname.startsWith(href) || (href === '/import-orders' && location.pathname === '/');
+    // Tách path và query string
+    const hrefPath = href.split('?')[0];
+    const currentPath = location.pathname;
+    
+    // Xử lý cho trang tạo phiếu nhập
+    if (hrefPath === '/import-orders/new') {
+      return currentPath === '/import-orders/new' || currentPath.startsWith('/import-orders/new');
+    }
+    
+    // Xử lý cho danh sách phiếu nhập - chỉ active khi không phải trang tạo mới
+    if (hrefPath === '/import-orders') {
+      return (currentPath === '/import-orders' || currentPath === '/') &&
+             !currentPath.startsWith('/import-orders/new');
+    }
+    
+    // Xử lý cho các trang view/edit phiếu nhập
+    if (currentPath.match(/^\/import-orders\/\d+/)) {
+      return hrefPath === '/import-orders';
+    }
+    
+    return currentPath === hrefPath;
   };
 
   return (

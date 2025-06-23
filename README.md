@@ -170,9 +170,11 @@ npm run test -- --coverage
 
 
 ### 🖨️ Cập nhập trạng thái phiếu nhập
-![Phiếu in](docs/images/Screenshot%202025-06-22%20at%2002.51.58.png)
+![Cập nhập trạng thái phiếu nhập](docs/images/Screenshot%202025-06-22%20at%2002.51.58.png)
 
 
+### 🖨️ In phiếu nhập
+![In phiếu nhập](docs/images/Screenshot%202025-06-22%20at%2002.25.24.png)
 
 ---
 
